@@ -35,13 +35,21 @@ function Dashboard() {
           <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-md text-white shadow-md">
             <p className="text-white/80 text-sm mb-1">Vault Balance</p>
             <p className="text-3xl font-bold">10,000 USDC</p>
-            <div className="mt-2 flex items-center">
+            <div className="mt-2 flex items-center justify-between">
               <span className="bg-green-400/30 text-white text-xs px-2 py-1 rounded flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
                 </svg>
                 +2.5%
               </span>
+              <div className="flex space-x-2">
+                <button className="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1 rounded transition-colors duration-300">
+                  Deposit
+                </button>
+                <button className="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1 rounded transition-colors duration-300">
+                  Borrow
+                </button>
+              </div>
             </div>
           </div>
           <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-md text-white shadow-md">
