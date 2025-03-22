@@ -22,7 +22,7 @@ function Dashboard() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Your Credit Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6">Your Financial Dashboard</h1>
       
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
         <div className="flex justify-between items-center mb-4">
@@ -32,17 +32,36 @@ function Dashboard() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-gray-50 p-4 rounded-md">
-            <p className="text-gray-500">Total Credit Limit</p>
-            <p className="text-2xl font-bold">7,000 USDC</p>
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-md text-white shadow-md">
+            <p className="text-white/80 text-sm mb-1">Vault Balance</p>
+            <p className="text-3xl font-bold">10,000 USDC</p>
+            <div className="mt-2 flex items-center">
+              <span className="bg-green-400/30 text-white text-xs px-2 py-1 rounded flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
+                </svg>
+                +2.5%
+              </span>
+            </div>
           </div>
-          <div className="bg-gray-50 p-4 rounded-md">
-            <p className="text-gray-500">Total Balance</p>
-            <p className="text-2xl font-bold">7,500 USDC</p>
+          <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-md text-white shadow-md">
+            <p className="text-white/80 text-sm mb-1">Credit Score</p>
+            <p className="text-3xl font-bold">785</p>
+            <div className="mt-2">
+              <div className="w-full bg-white/20 rounded-full h-2">
+                <div className="bg-green-400 h-2 rounded-full" style={{ width: '78.5%' }}></div>
+              </div>
+              <p className="text-xs mt-1 text-white/80">Excellent</p>
+            </div>
           </div>
-          <div className="bg-gray-50 p-4 rounded-md">
-            <p className="text-gray-500">Total Collateral</p>
-            <p className="text-2xl font-bold">10,000 USDC</p>
+          <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 p-6 rounded-md text-white shadow-md">
+            <p className="text-white/80 text-sm mb-1">Loan Limit</p>
+            <p className="text-3xl font-bold">15,000 USDC</p>
+            <div className="mt-2 flex items-center">
+              <span className="text-xs text-white/80">
+                50% of collateral value
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -184,14 +203,128 @@ function Dashboard() {
         </div>
       </div>
       
-      <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
-        <p className="font-medium">About our credit system:</p>
-        <ul className="list-disc pl-5 mt-2">
-          <li>KYC verification through World ID ensures privacy and security</li>
-          <li>All transactions are processed via zkSync for near-instant settlements</li>
-          <li>Collateralized credit offers better rates and flexible credit limits</li>
-          <li>Your assets remain secure through smart contracts</li>
-        </ul>
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold mb-4">Active Loans</h3>
+        
+        <div className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden mb-4">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 border-b border-gray-200">
+            <div className="flex justify-between items-center">
+              <h4 className="font-medium text-gray-800">Loan #38291</h4>
+              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Active</span>
+            </div>
+            <p className="text-sm text-gray-600 mt-1">Started on May 12, 2023 • 30% LTV ratio</p>
+          </div>
+          
+          <div className="p-5">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div>
+                <p className="text-sm text-gray-500">Loan Amount</p>
+                <p className="text-lg font-semibold">5,000 USDC</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Interest Rate</p>
+                <p className="text-lg font-semibold">3.5% APR</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Loan Token</p>
+                <p className="text-lg font-semibold flex items-center">
+                  <span className="w-5 h-5 mr-1 bg-blue-100 rounded-full flex items-center justify-center text-xs">$</span>
+                  USDC
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Collateral Token</p>
+                <p className="text-lg font-semibold flex items-center">
+                  <span className="w-5 h-5 mr-1 bg-blue-100 rounded-full flex items-center justify-center text-xs">Ξ</span>
+                  ETH (2.5)
+                </p>
+              </div>
+            </div>
+            
+            <div className="pt-4 border-t border-gray-200">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <span className="text-sm text-gray-500">Repayment Progress</span>
+                  <div className="flex items-center">
+                    <span className="text-sm font-medium">1,250 USDC paid</span>
+                    <span className="mx-2 text-gray-500">of</span>
+                    <span className="text-sm font-medium">5,175 USDC total</span>
+                  </div>
+                </div>
+                <span className="text-sm font-medium text-blue-600">24%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '24%' }}></div>
+              </div>
+            </div>
+            
+            <div className="mt-6 flex justify-end">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors duration-300">
+                Repay Loan
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 border-b border-gray-200">
+            <div className="flex justify-between items-center">
+              <h4 className="font-medium text-gray-800">Loan #27156</h4>
+              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Active</span>
+            </div>
+            <p className="text-sm text-gray-600 mt-1">Started on March 3, 2023 • 25% LTV ratio</p>
+          </div>
+          
+          <div className="p-5">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div>
+                <p className="text-sm text-gray-500">Loan Amount</p>
+                <p className="text-lg font-semibold">2,000 USDC</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Interest Rate</p>
+                <p className="text-lg font-semibold">2.8% APR</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Loan Token</p>
+                <p className="text-lg font-semibold flex items-center">
+                  <span className="w-5 h-5 mr-1 bg-blue-100 rounded-full flex items-center justify-center text-xs">$</span>
+                  USDC
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Collateral Token</p>
+                <p className="text-lg font-semibold flex items-center">
+                  <span className="w-5 h-5 mr-1 bg-yellow-100 rounded-full flex items-center justify-center text-xs">D</span>
+                  DAI (2,400)
+                </p>
+              </div>
+            </div>
+            
+            <div className="pt-4 border-t border-gray-200">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <span className="text-sm text-gray-500">Repayment Progress</span>
+                  <div className="flex items-center">
+                    <span className="text-sm font-medium">1,500 USDC paid</span>
+                    <span className="mx-2 text-gray-500">of</span>
+                    <span className="text-sm font-medium">2,056 USDC total</span>
+                  </div>
+                </div>
+                <span className="text-sm font-medium text-blue-600">73%</span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '73%' }}></div>
+              </div>
+            </div>
+            
+            <div className="mt-6 flex justify-end">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors duration-300">
+                Repay Loan
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
