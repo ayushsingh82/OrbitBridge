@@ -377,12 +377,13 @@
 /* Z symbols animation */
 .z-symbol {
   position: absolute;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   font-family: monospace;
   opacity: 0;
   z-index: 6;
+  text-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
 }
 
 .z-symbol:nth-child(1) {
@@ -414,4 +415,412 @@
   25% { opacity: 1; }
   75% { opacity: 0.7; }
   100% { transform: translate(0, -50px) rotate(10deg); opacity: 0; }
+}
+
+/* Floating crypto symbols for the homepage background */
+.crypto-symbols-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.crypto-symbol {
+  position: absolute;
+  opacity: 0.07;
+  font-size: 24px;
+  font-weight: bold;
+  color: #3b82f6;
+}
+
+.crypto-symbol:nth-child(1) {
+  top: 15%;
+  left: 10%;
+  animation: float-symbol 25s linear infinite;
+}
+
+.crypto-symbol:nth-child(2) {
+  top: 80%;
+  left: 15%;
+  animation: float-symbol 28s linear infinite 2s;
+}
+
+.crypto-symbol:nth-child(3) {
+  top: 30%;
+  left: 85%;
+  animation: float-symbol 20s linear infinite 5s;
+}
+
+.crypto-symbol:nth-child(4) {
+  top: 70%;
+  left: 80%;
+  animation: float-symbol 22s linear infinite 8s;
+}
+
+.crypto-symbol:nth-child(5) {
+  top: 40%;
+  left: 5%;
+  animation: float-symbol 30s linear infinite 1s;
+}
+
+.crypto-symbol:nth-child(6) {
+  top: 60%;
+  left: 90%;
+  animation: float-symbol 26s linear infinite 4s;
+}
+
+.crypto-symbol:nth-child(7) {
+  top: 20%;
+  left: 40%;
+  animation: float-symbol 32s linear infinite 7s;
+}
+
+.crypto-symbol:nth-child(8) {
+  top: 85%;
+  left: 50%;
+  animation: float-symbol 24s linear infinite 3s;
+}
+
+@keyframes float-symbol {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translateY(100px) scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+/* Digital connections effect */
+.digital-connections {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.connection-line {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+  height: 1px;
+  width: 150px;
+  opacity: 0;
+}
+
+.connection-line:nth-child(1) {
+  top: 20%;
+  left: 20%;
+  transform: rotate(45deg);
+  animation: connection-flash 3s infinite 0.2s;
+}
+
+.connection-line:nth-child(2) {
+  top: 40%;
+  left: 10%;
+  transform: rotate(-30deg);
+  animation: connection-flash 4s infinite 1.5s;
+}
+
+.connection-line:nth-child(3) {
+  top: 70%;
+  left: 30%;
+  transform: rotate(60deg);
+  animation: connection-flash 3.5s infinite 0.8s;
+}
+
+.connection-line:nth-child(4) {
+  top: 50%;
+  right: 15%;
+  transform: rotate(-45deg);
+  animation: connection-flash 4.2s infinite 2s;
+}
+
+.connection-line:nth-child(5) {
+  top: 30%;
+  right: 25%;
+  transform: rotate(20deg);
+  animation: connection-flash 3.8s infinite 1.2s;
+}
+
+.connection-line:nth-child(6) {
+  top: 80%;
+  right: 35%;
+  transform: rotate(-15deg);
+  animation: connection-flash 4.5s infinite 0.5s;
+}
+
+@keyframes connection-flash {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  50% {
+    opacity: 0.5;
+    width: 150px;
+  }
+  100% {
+    opacity: 0;
+    width: 0;
+  }
+}
+
+/* Pulse effect animation */
+.pulse-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  animation: pulse-effect 4s infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pulse-circle:nth-child(1) {
+  width: 300px;
+  height: 300px;
+  left: -150px;
+  top: 30%;
+}
+
+.pulse-circle:nth-child(2) {
+  width: 400px;
+  height: 400px;
+  right: -200px;
+  top: 60%;
+  animation-delay: 2s;
+}
+
+@keyframes pulse-effect {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Enhanced card animations - Orbiting elements */
+.orbit-container {
+  position: absolute;
+  width: 500px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.orbit-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1.5px dashed rgba(59, 130, 246, 0.3);
+  border-radius: 50%;
+  animation: rotate 20s linear infinite;
+}
+
+.orbit-circle:nth-child(1) {
+  width: 95%;
+  height: 95%;
+  animation-duration: 15s;
+}
+
+.orbit-circle:nth-child(2) {
+  width: 80%;
+  height: 80%;
+  border-style: solid;
+  border-width: 1.5px;
+  border-color: rgba(59, 130, 246, 0.35);
+  animation-duration: 20s;
+  animation-direction: reverse;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.orbit-dot {
+  position: absolute;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 1);
+}
+
+.orbit-dot:nth-child(1) {
+  width: 12px;
+  height: 12px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: pulse-brightness 3s infinite;
+}
+
+.orbit-dot:nth-child(2) {
+  width: 10px;
+  height: 10px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: pulse-brightness 3s infinite 1.5s;
+}
+
+.orbit-dot:nth-child(3) {
+  width: 14px;
+  height: 14px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  animation: pulse-brightness 3s infinite 0.5s;
+}
+
+.orbit-dot:nth-child(4) {
+  width: 8px;
+  height: 8px;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  animation: pulse-brightness 3s infinite 2s;
+}
+
+@keyframes pulse-brightness {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* Data streams flowing to/from card */
+.data-stream {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0), rgba(59, 130, 246, 1), rgba(59, 130, 246, 0));
+  animation: stream-flow 3s infinite linear;
+  opacity: 0;
+  z-index: 2;
+}
+
+.data-stream:nth-child(1) {
+  width: 120px;
+  top: 30%;
+  right: 100%;
+  transform: rotate(10deg);
+  animation-delay: 0.2s;
+}
+
+.data-stream:nth-child(2) {
+  width: 140px;
+  top: 70%;
+  right: 100%;
+  transform: rotate(-15deg);
+  animation-delay: 1.5s;
+}
+
+.data-stream:nth-child(3) {
+  width: 150px;
+  top: 35%;
+  left: 100%;
+  transform: rotate(-10deg);
+  animation-delay: 0.7s;
+}
+
+.data-stream:nth-child(4) {
+  width: 130px;
+  top: 65%;
+  left: 100%;
+  transform: rotate(15deg);
+  animation-delay: 2s;
+}
+
+@keyframes stream-flow {
+  0% { 
+    opacity: 0; 
+    transform: translateX(0) rotate(var(--rotation, 0deg)); 
+  }
+  50% { 
+    opacity: 0.8; 
+    transform: translateX(var(--direction, -20px)) rotate(var(--rotation, 0deg)); 
+  }
+  100% { 
+    opacity: 0; 
+    transform: translateX(var(--direction, -40px)) rotate(var(--rotation, 0deg)); 
+  }
+}
+
+/* Enhanced glowing effect */
+.credit-card-container::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: -30px;
+  right: -30px;
+  bottom: -30px;
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.5) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse-glow-enhanced 4s infinite alternate;
+  z-index: -1;
+}
+
+@keyframes pulse-glow-enhanced {
+  0% { 
+    opacity: 0.3; 
+    transform: scale(0.9);
+  }
+  100% { 
+    opacity: 0.8; 
+    transform: scale(1.1);
+  }
+}
+
+/* Floating icons around card */
+.floating-icon {
+  position: absolute;
+  font-size: 20px;
+  color: rgba(59, 130, 246, 0.8);
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.7));
+  z-index: 3;
+}
+
+.floating-icon:nth-child(1) {
+  top: -40px;
+  left: 20%;
+  animation: float-icon 6s ease-in-out infinite;
+}
+
+.floating-icon:nth-child(2) {
+  top: 20%;
+  right: -40px;
+  animation: float-icon 7s ease-in-out infinite 1s;
+}
+
+.floating-icon:nth-child(3) {
+  bottom: -30px;
+  left: 30%;
+  animation: float-icon 5s ease-in-out infinite 2s;
+}
+
+.floating-icon:nth-child(4) {
+  left: -35px;
+  top: 40%;
+  animation: float-icon 8s ease-in-out infinite 3s;
+}
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(5deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(10px) rotate(-5deg); }
 }

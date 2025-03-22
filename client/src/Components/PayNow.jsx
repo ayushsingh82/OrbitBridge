@@ -13,7 +13,7 @@ function PayNow() {
   // Available tokens
   const tokens = [
     { symbol: 'USDC', name: 'USD Coin', icon: '💵' },
-    { symbol: 'ETH', name: 'Ethereum', icon: '⧫' },
+    { symbol: 'WEth', name: 'Wrapped Ethereum', icon: '⧫' },
     { symbol: 'DAI', name: 'Dai Stablecoin', icon: '🔶' }
   ]
   
@@ -57,105 +57,103 @@ function PayNow() {
   }
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Make a Payment</h1>
-      
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8 max-w-xl mx-auto">
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-4">Payment Details</h2>
-          <p className="text-gray-600 text-sm">
-            Send funds instantly using zkSync for near-instant settlements with minimal fees.
-          </p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-xl w-full space-y-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Make a Payment</h1>
+          <p className="text-gray-500 mb-8">Fast, secure transactions on zkSync</p>
         </div>
         
-        {message && (
-          <div className={`p-4 mb-6 rounded-md ${message.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
-            {message.text}
-          </div>
-        )}
-        
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="recipient" className="block text-gray-700 font-medium mb-2">
-              Recipient Address
-            </label>
-            <input
-              type="text"
-              id="recipient"
-              name="recipient"
-              value={paymentData.recipient}
-              onChange={handleChange}
-              placeholder="0x..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-            <p className="mt-1 text-xs text-gray-500">Enter the wallet address of the recipient</p>
-          </div>
+        <div className="bg-white rounded-lg shadow-xl p-8">
+          {message && (
+            <div className={`p-4 mb-6 rounded-md ${message.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+              {message.text}
+            </div>
+          )}
           
-          <div className="mb-4">
-            <label htmlFor="amount" className="block text-gray-700 font-medium mb-2">
-              Amount
-            </label>
-            <div className="flex">
-              <input
-                type="number"
-                id="amount"
-                name="amount"
-                value={paymentData.amount}
-                onChange={handleChange}
-                placeholder="0.00"
-                min="0"
-                step="0.01"
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="recipient" className="block text-sm font-medium text-gray-700">
+                Recipient Address
+              </label>
+              <div className="mt-1">
+                <input
+                  id="recipient"
+                  name="recipient"
+                  type="text"
+                  required
+                  value={paymentData.recipient}
+                  onChange={handleChange}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="0x..."
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
+                Amount
+              </label>
+              <div className="mt-1 relative rounded-md shadow-sm">
+                <input
+                  id="amount"
+                  name="amount"
+                  type="text"
+                  required
+                  value={paymentData.amount}
+                  onChange={handleChange}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  placeholder="0.00"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label htmlFor="token" className="block text-sm font-medium text-gray-700">
+                Token
+              </label>
               <select
+                id="token"
                 name="token"
                 value={paymentData.token}
                 onChange={handleChange}
-                className="px-4 py-2 bg-gray-50 border border-l-0 border-gray-300 rounded-r-md focus:outline-none"
+                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
               >
                 {tokens.map(token => (
                   <option key={token.symbol} value={token.symbol}>
-                    {token.icon} {token.symbol}
+                    {token.icon} {token.name} ({token.symbol})
                   </option>
                 ))}
               </select>
             </div>
-          </div>
+            
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  'Send Payment'
+                )}
+              </button>
+            </div>
+          </form>
           
-          <div className="mb-6">
-            <p className="text-sm text-gray-600">
-              Estimated fee: 0.0001 ETH (~$0.25)
-            </p>
+          <div className="mt-6 border-t border-gray-200 pt-4">
+            <div className="text-xs text-gray-500 text-center">
+              Powered by zkSync Layer 2 • Transactions confirm in seconds with minimal fees
+            </div>
           </div>
-          
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full py-3 px-4 ${isLoading ? 'bg-blue-400' : 'bg-blue-600 hover:bg-blue-700'} text-white font-medium rounded-md transition-colors duration-300`}
-          >
-            {isLoading ? (
-              <span className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Processing...
-              </span>
-            ) : 'Make Payment'}
-          </button>
-        </form>
-      </div>
-      
-      <div className="max-w-xl mx-auto bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
-        <p className="font-medium">Payment Information:</p>
-        <ul className="list-disc pl-5 mt-2">
-          <li>All payments are processed via zkSync for near-instant confirmations</li>
-          <li>Transaction fees are minimized through Layer 2 technology</li>
-          <li>Always double-check recipient addresses before sending</li>
-          <li>Your transaction will be verifiable on-chain and private with zero-knowledge proofs</li>
-        </ul>
+        </div>
       </div>
     </div>
   )

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('cards')
+  const [isDepositModalOpen, setIsDepositModalOpen] = useState(false)
+  const [isBorrowModalOpen, setIsBorrowModalOpen] = useState(false)
   
   // Mock data - replace with actual data from your backend
   const cards = [
@@ -20,6 +22,12 @@ function Dashboard() {
     { id: 2, asset: 'DAI', amount: '4000', valueUSDC: '4000' }
   ]
 
+  // Functions to open/close modals
+  const openDepositModal = () => setIsDepositModalOpen(true)
+  const closeDepositModal = () => setIsDepositModalOpen(false)
+  const openBorrowModal = () => setIsBorrowModalOpen(true)
+  const closeBorrowModal = () => setIsBorrowModalOpen(false)
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Your Financial Dashboard</h1>
@@ -34,7 +42,7 @@ function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-md text-white shadow-md">
             <p className="text-white/80 text-sm mb-1">Vault Balance</p>
-            <p className="text-3xl font-bold">10,000 USDC</p>
+            <p className="text-3xl font-bold">10,000 WEth</p>
             <div className="mt-2 flex items-center justify-between">
               <span className="bg-green-400/30 text-white text-xs px-2 py-1 rounded flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -43,10 +51,16 @@ function Dashboard() {
                 +2.5%
               </span>
               <div className="flex space-x-2">
-                <button className="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1 rounded transition-colors duration-300">
+                <button 
+                  onClick={openDepositModal} 
+                  className="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1 rounded transition-colors duration-300"
+                >
                   Deposit
                 </button>
-                <button className="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1 rounded transition-colors duration-300">
+                <button 
+                  onClick={openBorrowModal} 
+                  className="bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-1 rounded transition-colors duration-300"
+                >
                   Borrow
                 </button>
               </div>
@@ -217,7 +231,7 @@ function Dashboard() {
         <div className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden mb-4">
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 border-b border-gray-200">
             <div className="flex justify-between items-center">
-              <h4 className="font-medium text-gray-800">Loan #38291</h4>
+              <h4 className="font-medium text-gray-800">Loan #38</h4>
               <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Active</span>
             </div>
             <p className="text-sm text-gray-600 mt-1">Started on May 12, 2023 • 30% LTV ratio</p>
@@ -265,75 +279,212 @@ function Dashboard() {
                 <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '24%' }}></div>
               </div>
             </div>
-            
-            <div className="mt-6 flex justify-end">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors duration-300">
-                Repay Loan
-              </button>
-            </div>
           </div>
         </div>
         
-        <div className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <h4 className="font-medium text-gray-800">Loan #27156</h4>
-              <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Active</span>
-            </div>
-            <p className="text-sm text-gray-600 mt-1">Started on March 3, 2023 • 25% LTV ratio</p>
-          </div>
-          
-          <div className="p-5">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-              <div>
-                <p className="text-sm text-gray-500">Loan Amount</p>
-                <p className="text-lg font-semibold">2,000 USDC</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Interest Rate</p>
-                <p className="text-lg font-semibold">2.8% APR</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Loan Token</p>
-                <p className="text-lg font-semibold flex items-center">
-                  <span className="w-5 h-5 mr-1 bg-blue-100 rounded-full flex items-center justify-center text-xs">$</span>
-                  USDC
-                </p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Collateral Token</p>
-                <p className="text-lg font-semibold flex items-center">
-                  <span className="w-5 h-5 mr-1 bg-yellow-100 rounded-full flex items-center justify-center text-xs">D</span>
-                  DAI (2,400)
-                </p>
-              </div>
-            </div>
+        <div className="mt-6 flex justify-end">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors duration-300">
+            Repay Loan
+          </button>
+        </div>
+      </div>
+      
+      {/* Deposit Modal */}
+      {isDepositModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            {/* Background overlay */}
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onClick={closeDepositModal}></div>
             
-            <div className="pt-4 border-t border-gray-200">
-              <div className="flex justify-between items-center mb-2">
-                <div>
-                  <span className="text-sm text-gray-500">Repayment Progress</span>
-                  <div className="flex items-center">
-                    <span className="text-sm font-medium">1,500 USDC paid</span>
-                    <span className="mx-2 text-gray-500">of</span>
-                    <span className="text-sm font-medium">2,056 USDC total</span>
+            {/* Modal panel */}
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                  </div>
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                      Deposit to Vault
+                    </h3>
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        Deposit assets to your vault to increase your borrowing capacity.
+                      </p>
+                    </div>
+                    
+                    <div className="mt-4">
+                      <form className="space-y-4">
+                        <div>
+                          <label htmlFor="asset" className="block text-sm font-medium text-gray-700">Asset</label>
+                          <select id="asset" name="asset" className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                            <option value="weth">WEth</option>
+                            <option value="usdc">USDC</option>
+                            <option value="dai">DAI</option>
+                            <option value="btc">wBTC</option>
+                          </select>
+                        </div>
+                        
+                        <div>
+                          <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Amount</label>
+                          <div className="mt-1 relative rounded-md shadow-sm">
+                            <input
+                              type="text"
+                              name="amount"
+                              id="amount"
+                              className="focus:ring-blue-500 focus:border-blue-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
+                              placeholder="0.00"
+                            />
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                              <span className="text-gray-500 sm:text-sm" id="price-currency">
+                                WEth
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <label htmlFor="estimate" className="block text-sm font-medium text-gray-700">Estimated Value</label>
+                          <div className="mt-1 relative rounded-md shadow-sm">
+                            <input
+                              type="text"
+                              name="estimate"
+                              id="estimate"
+                              disabled
+                              className="bg-gray-50 focus:ring-blue-500 focus:border-blue-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
+                              placeholder="0.00"
+                              value="0.00"
+                            />
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                              <span className="text-gray-500 sm:text-sm">
+                                USDC
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
-                <span className="text-sm font-medium text-blue-600">73%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5">
-                <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '73%' }}></div>
+              
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button 
+                  type="button" 
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Confirm Deposit
+                </button>
+                <button 
+                  type="button" 
+                  onClick={closeDepositModal}
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Cancel
+                </button>
               </div>
-            </div>
-            
-            <div className="mt-6 flex justify-end">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-colors duration-300">
-                Repay Loan
-              </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
+      
+      {/* Borrow Modal */}
+      {isBorrowModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            {/* Background overlay */}
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onClick={closeBorrowModal}></div>
+            
+            {/* Modal panel */}
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                    </svg>
+                  </div>
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                      Borrow Against Collateral
+                    </h3>
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        Borrow assets using your vault balance as collateral.
+                      </p>
+                    </div>
+                    
+                    <div className="mt-4">
+                      <form className="space-y-4">
+                        <div>
+                          <label htmlFor="borrow-asset" className="block text-sm font-medium text-gray-700">Asset to Borrow</label>
+                          <select id="borrow-asset" name="borrow-asset" className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                            <option value="usdc">USDC</option>
+                            <option value="dai">DAI</option>
+                          </select>
+                        </div>
+                        
+                        <div>
+                          <label htmlFor="borrow-amount" className="block text-sm font-medium text-gray-700">Amount to Borrow</label>
+                          <div className="mt-1 relative rounded-md shadow-sm">
+                            <input
+                              type="text"
+                              name="borrow-amount"
+                              id="borrow-amount"
+                              className="focus:ring-blue-500 focus:border-blue-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
+                              placeholder="0.00"
+                            />
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                              <span className="text-gray-500 sm:text-sm">
+                                USDC
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-blue-50 p-3 rounded-md">
+                          <h4 className="text-sm font-medium text-blue-800 mb-2">Loan Terms</h4>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div className="text-xs text-blue-700">Interest Rate:</div>
+                            <div className="text-xs text-blue-800 font-medium">3.5% APR</div>
+                            
+                            <div className="text-xs text-blue-700">Collateral Required:</div>
+                            <div className="text-xs text-blue-800 font-medium">150% LTV</div>
+                            
+                            <div className="text-xs text-blue-700">Liquidation Threshold:</div>
+                            <div className="text-xs text-blue-800 font-medium">120% LTV</div>
+                            
+                            <div className="text-xs text-blue-700">Duration:</div>
+                            <div className="text-xs text-blue-800 font-medium">90 days</div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button 
+                  type="button" 
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Confirm Borrow
+                </button>
+                <button 
+                  type="button" 
+                  onClick={closeBorrowModal}
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

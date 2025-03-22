@@ -3,14 +3,40 @@ import { Link } from 'react-router-dom'
 
 function Home() {
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-16">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-white via-blue-50 to-indigo-50">
+      {/* Background crypto symbols */}
+      <div className="crypto-symbols-container">
+        <div className="crypto-symbol">₿</div>
+        <div className="crypto-symbol">Ξ</div>
+        <div className="crypto-symbol">Ł</div>
+        <div className="crypto-symbol">Ð</div>
+        <div className="crypto-symbol">ⓩ</div>
+        <div className="crypto-symbol">$</div>
+        <div className="crypto-symbol">₮</div>
+        <div className="crypto-symbol">◎</div>
+      </div>
+      
+      {/* Digital connection lines */}
+      <div className="digital-connections">
+        <div className="connection-line"></div>
+        <div className="connection-line"></div>
+        <div className="connection-line"></div>
+        <div className="connection-line"></div>
+        <div className="connection-line"></div>
+        <div className="connection-line"></div>
+      </div>
+      
+      {/* Pulse circle effects */}
+      <div className="pulse-circle"></div>
+      <div className="pulse-circle"></div>
+      
+      <div className="container mx-auto px-4 py-16 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Left side content */}
           <div className="w-full md:w-1/2 mb-12 md:mb-0">
-            <h1 className="text-5xl font-bold text-gray-900 leading-tight mb-6">
+            <h1 className="text-5xl font-bold leading-tight mb-6">
               Secure, Collateralized <br />
-              <span className="text-blue-600">Crypto Credit</span> <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Crypto Credit</span> <br />
               Solutions
             </h1>
             <p className="text-xl text-gray-700 mb-8 max-w-lg">
@@ -20,10 +46,10 @@ function Home() {
               Our revolutionary credit system uses World ID for privacy-preserving verification and zkSync for near-instant, low-cost transactions. Keep your assets secured through smart contracts while accessing the spending power you need.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link to="/dashboard" className="px-8 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors duration-300">
+              <Link to="/dashboard" className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-md hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
                 Get Started
               </Link>
-              <Link to="/pay" className="px-8 py-3 border border-blue-600 text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors duration-300">
+              <Link to="/pay" className="px-8 py-3 border border-blue-600 text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors duration-300 shadow-sm hover:shadow transform hover:-translate-y-1">
                 Make a Payment
               </Link>
             </div>
@@ -32,6 +58,24 @@ function Home() {
           {/* Right side - Credit Card Animation */}
           <div className="w-full md:w-1/2 flex justify-center">
             <div className="credit-card-container">
+              {/* Orbiting elements */}
+              <div className="orbit-container">
+                <div className="orbit-circle">
+                  <div className="orbit-dot"></div>
+                  <div className="orbit-dot"></div>
+                </div>
+                <div className="orbit-circle">
+                  <div className="orbit-dot"></div>
+                  <div className="orbit-dot"></div>
+                </div>
+              </div>
+              
+              {/* Data streams */}
+              <div className="data-stream" style={{"--direction": "-40px", "--rotation": "10deg"}}></div>
+              <div className="data-stream" style={{"--direction": "-40px", "--rotation": "-15deg"}}></div>
+              <div className="data-stream" style={{"--direction": "40px", "--rotation": "-10deg"}}></div>
+              <div className="data-stream" style={{"--direction": "40px", "--rotation": "15deg"}}></div>
+              
               {/* Credit card particles */}
               <div className="card-particles">
                 <div className="particle"></div>
@@ -92,6 +136,9 @@ function Home() {
           </div>
         </div>
       </div>
+      
+      {/* Gradient accent at the bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-blue-100 to-transparent"></div>
     </div>
   )
 }
