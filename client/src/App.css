@@ -824,3 +824,469 @@
   50% { transform: translateY(0) rotate(0deg); }
   75% { transform: translateY(10px) rotate(-5deg); }
 }
+
+/* Network card styles - updated for multiple rollups */
+.network-card {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.network-card-back {
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+}
+
+.network-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.network-visualization {
+  position: relative;
+  height: 140px;
+  margin: 5px 0 15px;
+}
+
+/* Layer positioning */
+.l1-node {
+  width: 85px;
+  height: 85px;
+  background: rgba(232, 196, 255, 0.3);
+  border: 2px solid rgba(232, 196, 255, 0.7);
+  font-size: 14px;
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.l2-node {
+  width: 70px;
+  height: 70px;
+  background: rgba(173, 216, 255, 0.3);
+  border: 2px solid rgba(173, 216, 255, 0.7);
+  position: absolute;
+  z-index: 2;
+}
+
+.orbit-node {
+  width: 55px;
+  height: 55px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 11px;
+  position: absolute;
+  z-index: 1;
+}
+
+/* Specific node positioning */
+.ethereum-node {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.arbitrum-node {
+  left: 30%;
+  top: 45px;
+}
+
+.optimism-node {
+  right: 30%;
+  top: 45px;
+}
+
+.orbit-xai {
+  left: 15%;
+  top: 10px;
+}
+
+.orbit-stylex {
+  left: 50%;
+  top: 5px;
+  transform: translateX(-50%);
+}
+
+.orbit-degen {
+  right: 15%;
+  top: 10px;
+}
+
+/* Connection lines */
+.network-connection {
+  position: absolute;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 0;
+}
+
+.eth-to-arb {
+  width: 80px;
+  transform: rotate(-35deg);
+  bottom: 50px;
+  left: 38%;
+}
+
+.eth-to-opt {
+  width: 80px;
+  transform: rotate(35deg);
+  bottom: 50px;
+  right: 38%;
+}
+
+.arb-to-xai {
+  width: 40px;
+  transform: rotate(-45deg);
+  top: 50px;
+  left: 25%;
+}
+
+.arb-to-stylex {
+  width: 60px;
+  transform: rotate(0deg);
+  top: 40px;
+  left: 38%;
+}
+
+.arb-to-degen {
+  width: 70px;
+  transform: rotate(35deg);
+  top: 45px;
+  right: 30%;
+}
+
+/* Animated pulse effect for nodes */
+.network-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  animation: node-pulse 3s infinite alternate;
+}
+
+.l1-node {
+  animation-delay: 0s;
+}
+
+.l2-node {
+  animation-delay: 0.5s;
+}
+
+.orbit-node {
+  animation-delay: 1s;
+}
+
+@keyframes node-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+  100% { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 255, 255, 0.4); }
+}
+
+/* Fix for ethereum node which needs special transform */
+.ethereum-node {
+  animation: ethereum-node-pulse 3s infinite alternate;
+}
+
+@keyframes ethereum-node-pulse {
+  0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+  100% { transform: translateX(-50%) scale(1.05); box-shadow: 0 0 15px rgba(255, 255, 255, 0.4); }
+}
+
+/* Fix for stylex node which needs special transform */
+.orbit-stylex {
+  animation: stylex-node-pulse 3s infinite alternate;
+}
+
+@keyframes stylex-node-pulse {
+  0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+  100% { transform: translateX(-50%) scale(1.05); box-shadow: 0 0 15px rgba(255, 255, 255, 0.4); }
+}
+
+/* Data transfer effect on connections */
+.network-connection::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  top: -1px;
+  animation: data-transfer 4s infinite linear;
+}
+
+.eth-to-arb::after { animation-delay: 0.5s; }
+.eth-to-opt::after { animation-delay: 1.5s; }
+.arb-to-xai::after { animation-delay: 0s; }
+.arb-to-stylex::after { animation-delay: 2s; }
+.arb-to-degen::after { animation-delay: 1s; }
+
+@keyframes data-transfer {
+  0% { left: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Update backside with more rollup-focused information */
+.network-data {
+  padding: 10px 0;
+}
+
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.network-footer {
+  font-size: 11px;
+  text-align: center;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+/* New chain visualization styles */
+.network-visualization-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(99, 102, 241, 0.1));
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chains-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  position: relative;
+}
+
+.chain-node {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.chain-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--chain-color-start, #8b5cf6), var(--chain-color-end, #6366f1));
+}
+
+.chain-node:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chain-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--chain-color-start, #8b5cf6), var(--chain-color-end, #6366f1));
+  color: white;
+  border-radius: 50%;
+}
+
+.chain-name {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  color: #4b5563;
+}
+
+/* Individual chain colors */
+.ethereum {
+  --chain-color-start: #6b7280;
+  --chain-color-end: #4b5563;
+}
+
+.cartesi {
+  --chain-color-start: #ef4444;
+  --chain-color-end: #dc2626;
+}
+
+.comet {
+  --chain-color-start: #3b82f6;
+  --chain-color-end: #2563eb;
+}
+
+.cyber {
+  --chain-color-start: #10b981;
+  --chain-color-end: #059669;
+}
+
+.dca {
+  --chain-color-start: #8b5cf6;
+  --chain-color-end: #7c3aed;
+}
+
+.fhenix {
+  --chain-color-start: #f59e0b;
+  --chain-color-end: #d97706;
+}
+
+.fluent {
+  --chain-color-start: #ec4899;
+  --chain-color-end: #db2777;
+}
+
+.henez {
+  --chain-color-start: #06b6d4;
+  --chain-color-end: #0891b2;
+}
+
+.injective {
+  --chain-color-start: #6366f1;
+  --chain-color-end: #4f46e5;
+}
+
+.kinto {
+  --chain-color-start: #14b8a6;
+  --chain-color-end: #0d9488;
+}
+
+.mantis {
+  --chain-color-start: #84cc16;
+  --chain-color-end: #65a30d;
+}
+
+.plume {
+  --chain-color-start: #a855f7;
+  --chain-color-end: #9333ea;
+}
+
+.rari {
+  --chain-color-start: #f43f5e;
+  --chain-color-end: #e11d48;
+}
+
+.rollux {
+  --chain-color-start: #0ea5e9;
+  --chain-color-end: #0284c7;
+}
+
+.specular {
+  --chain-color-start: #8b5cf6;
+  --chain-color-end: #7c3aed;
+}
+
+.taiko {
+  --chain-color-start: #f97316;
+  --chain-color-end: #ea580c;
+}
+
+.treasure {
+  --chain-color-start: #eab308;
+  --chain-color-end: #ca8a04;
+}
+
+/* Animation for nodes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chain-node {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+/* Stagger the animations */
+.chain-node:nth-child(1) { animation-delay: 0.1s; }
+.chain-node:nth-child(2) { animation-delay: 0.15s; }
+.chain-node:nth-child(3) { animation-delay: 0.2s; }
+.chain-node:nth-child(4) { animation-delay: 0.25s; }
+.chain-node:nth-child(5) { animation-delay: 0.3s; }
+.chain-node:nth-child(6) { animation-delay: 0.35s; }
+.chain-node:nth-child(7) { animation-delay: 0.4s; }
+.chain-node:nth-child(8) { animation-delay: 0.45s; }
+.chain-node:nth-child(9) { animation-delay: 0.5s; }
+.chain-node:nth-child(10) { animation-delay: 0.55s; }
+.chain-node:nth-child(11) { animation-delay: 0.6s; }
+.chain-node:nth-child(12) { animation-delay: 0.65s; }
+.chain-node:nth-child(13) { animation-delay: 0.7s; }
+.chain-node:nth-child(14) { animation-delay: 0.75s; }
+.chain-node:nth-child(15) { animation-delay: 0.8s; }
+.chain-node:nth-child(16) { animation-delay: 0.85s; }
+.chain-node:nth-child(17) { animation-delay: 0.9s; }
+
+/* Network metrics */
+.network-metrics {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 16px;
+  border-top: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #6366f1;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Background animation */
+.network-visualization-container::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(rgba(139, 92, 246, 0.1) 2px, transparent 2px),
+              radial-gradient(rgba(99, 102, 241, 0.1) 2px, transparent 2px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  animation: backgroundScroll 30s linear infinite;
+  z-index: -1;
+}
+
+@keyframes backgroundScroll {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-10%) rotate(5deg); }
+}

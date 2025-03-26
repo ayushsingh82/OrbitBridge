@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 
 function Home() {
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-white via-blue-50 to-indigo-50">
-      {/* Background crypto symbols */}
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50">
+      {/* Background symbols */}
       <div className="crypto-symbols-container">
-        <div className="crypto-symbol">₿</div>
         <div className="crypto-symbol">Ξ</div>
-        <div className="crypto-symbol">Ł</div>
-        <div className="crypto-symbol">Ð</div>
-        <div className="crypto-symbol">ⓩ</div>
-        <div className="crypto-symbol">$</div>
-        <div className="crypto-symbol">₮</div>
+        <div className="crypto-symbol">⟁</div>
         <div className="crypto-symbol">◎</div>
+        <div className="crypto-symbol">♦</div>
+        <div className="crypto-symbol">⚡</div>
+        <div className="crypto-symbol">Ⓐ</div>
+        <div className="crypto-symbol">⛓️</div>
+        <div className="crypto-symbol">🔄</div>
       </div>
       
       {/* Digital connection lines */}
@@ -35,101 +35,132 @@ function Home() {
           {/* Left side content */}
           <div className="w-full md:w-1/2 mb-12 md:mb-0">
             <h1 className="text-5xl font-bold leading-tight mb-6">
-              Secure, Collateralized <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Crypto Credit</span> <br />
-              Solutions
+              Universal <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">Crosschain</span> <br />
+              Analytics
             </h1>
             <p className="text-xl text-gray-700 mb-8 max-w-lg">
-              Access the power of decentralized finance with KYC-verified crypto collateral cards and instant payments on zkSync.
+              Track bridging volume, transaction times, popular routes, and protocols across Espresso-integrated chains and the Arbitrum Orbit ecosystem.
             </p>
             <p className="text-gray-600 mb-10 max-w-lg">
-              Our revolutionary credit system uses World ID for privacy-preserving verification and zkSync for near-instant, low-cost transactions. Keep your assets secured through smart contracts while accessing the spending power you need.
+              Our comprehensive dashboard provides real-time insights into cross-chain activity, helping you make informed decisions about bridge usage, gas efficiency, and emerging trends in the multi-chain landscape.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link to="/dashboard" className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-md hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
-                Get Started
+              <Link to="/dashboard" className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-md hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                Explore Analytics
               </Link>
-              <Link to="/pay" className="px-8 py-3 border border-blue-600 text-blue-600 font-medium rounded-md hover:bg-blue-50 transition-colors duration-300 shadow-sm hover:shadow transform hover:-translate-y-1">
-                Make a Payment
+              <Link to="/chains" className="px-8 py-3 border border-purple-600 text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors duration-300 shadow-sm hover:shadow transform hover:-translate-y-1">
+                View Chains
               </Link>
             </div>
           </div>
           
-          {/* Right side - Credit Card Animation */}
+          {/* Right side - Network Animation */}
           <div className="w-full md:w-1/2 flex justify-center">
-            <div className="credit-card-container">
-              {/* Orbiting elements */}
-              <div className="orbit-container">
-                <div className="orbit-circle">
-                  <div className="orbit-dot"></div>
-                  <div className="orbit-dot"></div>
+            <div className="network-visualization-container">
+              <h3 className="text-xl font-semibold text-center mb-4 text-purple-700">Supported Chains</h3>
+              
+              <div className="chains-grid">
+                {/* Layer 1 */}
+                <div className="chain-node ethereum">
+                  <div className="chain-icon">Ξ</div>
+                  <span className="chain-name">Ethereum</span>
                 </div>
-                <div className="orbit-circle">
-                  <div className="orbit-dot"></div>
-                  <div className="orbit-dot"></div>
+                
+                {/* Layer 2 & Specialized Chains */}
+                <div className="chain-node cartesi">
+                  <div className="chain-icon">C</div>
+                  <span className="chain-name">Cartesi</span>
+                </div>
+                
+                <div className="chain-node comet">
+                  <div className="chain-icon">☄️</div>
+                  <span className="chain-name">Comet</span>
+                </div>
+                
+                <div className="chain-node cyber">
+                  <div className="chain-icon">⚡</div>
+                  <span className="chain-name">Cyber</span>
+                </div>
+                
+                <div className="chain-node dca">
+                  <div className="chain-icon">Đ</div>
+                  <span className="chain-name">DCA Monster</span>
+                </div>
+                
+                <div className="chain-node fhenix">
+                  <div className="chain-icon">🔥</div>
+                  <span className="chain-name">Fhenix</span>
+                </div>
+                
+                <div className="chain-node fluent">
+                  <div className="chain-icon">F</div>
+                  <span className="chain-name">Fluent</span>
+                </div>
+                
+                <div className="chain-node henez">
+                  <div className="chain-icon">H</div>
+                  <span className="chain-name">Henez</span>
+                </div>
+                
+                <div className="chain-node injective">
+                  <div className="chain-icon">I</div>
+                  <span className="chain-name">Injective</span>
+                </div>
+                
+                <div className="chain-node kinto">
+                  <div className="chain-icon">K</div>
+                  <span className="chain-name">Kinto</span>
+                </div>
+                
+                <div className="chain-node mantis">
+                  <div className="chain-icon">M</div>
+                  <span className="chain-name">Mantis</span>
+                </div>
+                
+                <div className="chain-node plume">
+                  <div className="chain-icon">P</div>
+                  <span className="chain-name">Plume</span>
+                </div>
+                
+                <div className="chain-node rari">
+                  <div className="chain-icon">R</div>
+                  <span className="chain-name">Rari</span>
+                </div>
+                
+                <div className="chain-node rollux">
+                  <div className="chain-icon">R</div>
+                  <span className="chain-name">Rollux</span>
+                </div>
+                
+                <div className="chain-node specular">
+                  <div className="chain-icon">S</div>
+                  <span className="chain-name">Specular</span>
+                </div>
+                
+                <div className="chain-node taiko">
+                  <div className="chain-icon">T</div>
+                  <span className="chain-name">Taiko</span>
+                </div>
+                
+                <div className="chain-node treasure">
+                  <div className="chain-icon">💎</div>
+                  <span className="chain-name">Treasure</span>
                 </div>
               </div>
               
-              {/* Data streams */}
-              <div className="data-stream" style={{"--direction": "-40px", "--rotation": "10deg"}}></div>
-              <div className="data-stream" style={{"--direction": "-40px", "--rotation": "-15deg"}}></div>
-              <div className="data-stream" style={{"--direction": "40px", "--rotation": "-10deg"}}></div>
-              <div className="data-stream" style={{"--direction": "40px", "--rotation": "15deg"}}></div>
-              
-              {/* Credit card particles */}
-              <div className="card-particles">
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-                <div className="particle"></div>
-              </div>
-              
-              {/* Z symbols */}
-              <div className="z-symbol">Z</div>
-              <div className="z-symbol">Z</div>
-              <div className="z-symbol">Z</div>
-              <div className="z-symbol">Z</div>
-              
-              <div className="credit-card front">
-                <div className="credit-card-header">
-                  <div className="credit-card-logo">Credit Z</div>
-                  <div className="credit-card-chip"></div>
+              <div className="network-metrics mt-6">
+                <div className="metric">
+                  <span className="metric-value">17+</span>
+                  <span className="metric-label">Chains</span>
                 </div>
-                <div className="credit-card-number">
-                  <span>●●●●</span>
-                  <span>●●●●</span>
-                  <span>●●●●</span>
-                  <span>3579</span>
+                <div className="metric">
+                  <span className="metric-value">$2.1B</span>
+                  <span className="metric-label">TVL</span>
                 </div>
-                <div className="credit-card-footer">
-                  <div className="credit-card-holder">
-                    <div className="label">Card Holder</div>
-                    <div className="name">YOUR NAME</div>
-                  </div>
-                  <div className="credit-card-expires">
-                    <div className="label">Expires</div>
-                    <div className="date">12/28</div>
-                  </div>
-                </div>
-              </div>
-              <div className="credit-card back">
-                <div className="credit-card-stripe"></div>
-                <div className="credit-card-signature">
-                  <div className="signature"></div>
-                  <div className="cvv">CVV: 123</div>
-                </div>
-                <div className="credit-card-info">
-                  Secured with zkSync Layer 2
-                  <br />
-                  Collateralized with crypto assets
+                <div className="metric">
+                  <span className="metric-value">56</span>
+                  <span className="metric-label">Bridges</span>
                 </div>
               </div>
             </div>
@@ -138,7 +169,7 @@ function Home() {
       </div>
       
       {/* Gradient accent at the bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-blue-100 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-indigo-100 to-transparent"></div>
     </div>
   )
 }
