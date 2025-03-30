@@ -1,309 +1,352 @@
 import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { Settings, Info, ArrowDownUp } from 'lucide-react'
+
+// Import token data from Routes
+const TOKENS = {
+  ETH: {
+    symbol: 'ETH',
+    name: 'Ethereum',
+    logoURI: 'https://tokens.1inch.io/0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.png'
+  },
+  USDT: {
+    symbol: 'USDT',
+    name: 'Tether USD',
+    logoURI: 'https://tokens.1inch.io/0xdac17f958d2ee523a2206206994597c13d831ec7.png'
+  },
+  USDC: {
+    symbol: 'USDC',
+    name: 'USD Coin',
+    logoURI: 'https://tokens.1inch.io/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png'
+  },
+  MATIC: {
+    symbol: 'MATIC',
+    name: 'Polygon',
+    logoURI: 'https://tokens.1inch.io/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png'
+  },
+  BNB: {
+    symbol: 'BNB',
+    name: 'BNB',
+    logoURI: 'https://tokens.1inch.io/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png'
+  },
+  BUSD: {
+    symbol: 'BUSD',
+    name: 'Binance USD',
+    logoURI: 'https://tokens.1inch.io/0x4fabb145d64652a948d72533023f6e7a623c7c53.png'
+  }
+}
+
+function TokenLogo({ symbol }) {
+  const token = TOKENS[symbol]
+  return (
+    <div className="flex items-center gap-2">
+      <img
+        src={token?.logoURI}
+        alt={token?.symbol}
+        className="w-6 h-6 rounded-full"
+        onError={(e) => {
+          e.target.onerror = null
+          e.target.src = `https://placehold.co/24x24/4B4BFF/FFFFFF/png?text=${symbol?.[0]}`
+        }}
+      />
+      <span>{symbol}</span>
+    </div>
+  )
+}
+
+const CHAINS = {
+  ETHEREUM: {
+    id: 'ethereum',
+    name: 'Ethereum',
+    symbol: 'ETH',
+    logoURI: 'https://tokens.1inch.io/0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.png'
+  },
+  ARBITRUM: {
+    id: 'arbitrum',
+    name: 'Arbitrum',
+    symbol: 'ARB',
+    logoURI: 'https://tokens.1inch.io/0x912ce59144191c1204e64559fe8253a0e49e6548.png'
+  },
+  OPTIMISM: {
+    id: 'optimism',
+    name: 'Optimism',
+    symbol: 'OP',
+    logoURI: 'https://tokens.1inch.io/0x4200000000000000000000000000000000000042.png'
+  },
+  POLYGON: {
+    id: 'polygon',
+    name: 'Polygon',
+    symbol: 'MATIC',
+    logoURI: 'https://tokens.1inch.io/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png'
+  },
+  BSC: {
+    id: 'bsc',
+    name: 'BNB Chain',
+    symbol: 'BNB',
+    logoURI: 'https://tokens.1inch.io/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png'
+  }
+}
+
+function ChainLogo({ chain }) {
+  return (
+    <div className="flex items-center gap-2">
+      <img
+        src={chain?.logoURI}
+        alt={chain?.name}
+        className="w-6 h-6 rounded-full"
+        onError={(e) => {
+          e.target.onerror = null
+          e.target.src = `https://placehold.co/24x24/4B4BFF/FFFFFF/png?text=${chain?.symbol?.[0]}`
+        }}
+      />
+      <span>{chain?.name}</span>
+    </div>
+  )
+}
+
+// Add this mock data mapping for different chain pairs
+const CHAIN_VOLUME_DATA = {
+  'ethereum-arbitrum': {
+    volume: '823.5M',
+    change: '+5.2%',
+    routes: [
+      { volume: '412.3M', protocol: 'Hop', change: '+3.1%' },
+      { volume: '256.7M', protocol: 'Across', change: '+6.4%' },
+      { volume: '154.5M', protocol: 'Stargate', change: '+4.8%' }
+    ]
+  },
+  'ethereum-optimism': {
+    volume: '612.7M',
+    change: '+8.3%',
+    routes: [
+      { volume: '298.4M', protocol: 'Hop', change: '+7.2%' },
+      { volume: '201.3M', protocol: 'Across', change: '+9.1%' },
+      { volume: '113.0M', protocol: 'Stargate', change: '+8.5%' }
+    ]
+  },
+  'polygon-ethereum': {
+    volume: '445.2M',
+    change: '+4.1%',
+    routes: [
+      { volume: '225.8M', protocol: 'Hop', change: '+2.8%' },
+      { volume: '142.4M', protocol: 'Across', change: '+5.3%' },
+      { volume: '77.0M', protocol: 'Stargate', change: '+4.2%' }
+    ]
+  },
+  'bsc-ethereum': {
+    volume: '567.8M',
+    change: '+6.7%',
+    routes: [
+      { volume: '289.5M', protocol: 'Hop', change: '+5.9%' },
+      { volume: '178.3M', protocol: 'Across', change: '+7.4%' },
+      { volume: '100.0M', protocol: 'Stargate', change: '+6.8%' }
+    ]
+  },
+  // Add more chain pair combinations as needed
+}
 
 function Volume() {
-  // State for time filter
-  const [timeFilter, setTimeFilter] = useState('7d');
-  
-  // State for selected chains (for filtering)
-  const [selectedChains, setSelectedChains] = useState([]);
-  
-  // Mock data - would be replaced with API calls in production
-  const volumeData = {
-    totalVolume: "$1.42B",
-    dailyVolume: "$28.5M",
-    weeklyGrowth: "+12.3%",
-    topBridge: "Ethereum → Arbitrum",
-    topBridgeVolume: "$8.2M"
-  };
-  
-  // Mock chain data with logos
-  const chains = [
-    { id: 'ethereum', name: 'Ethereum', icon: '/assets/chain-logos/ethereum.svg' },
-    { id: 'arbitrum', name: 'Arbitrum', icon: '/assets/chain-logos/arbitrum.svg' },
-    { id: 'optimism', name: 'Optimism', icon: '/assets/chain-logos/optimism.svg' },
-    { id: 'cartesi', name: 'Cartesi', icon: '/assets/chain-logos/cartesi.svg' },
-    { id: 'taiko', name: 'Taiko', icon: '/assets/chain-logos/taiko.svg' },
-    { id: 'fhenix', name: 'Fhenix', icon: '/assets/chain-logos/fhenix.svg' },
-    { id: 'zksync', name: 'zkSync', icon: '/assets/chain-logos/zksync.svg' },
-    { id: 'starknet', name: 'Starknet', icon: '/assets/chain-logos/starknet.svg' }
-  ];
-  
-  // Mock cross-chain volume data
-  const crossChainVolume = [
-    { source: 'ethereum', target: 'arbitrum', volume: 823500000, volumeFormatted: '$823.5M', change: '+5.2%' },
-    { source: 'ethereum', target: 'optimism', volume: 612700000, volumeFormatted: '$612.7M', change: '+8.3%' },
-    { source: 'arbitrum', target: 'ethereum', volume: 415200000, volumeFormatted: '$415.2M', change: '-2.1%' },
-    { source: 'optimism', target: 'ethereum', volume: 324900000, volumeFormatted: '$324.9M', change: '+1.7%' },
-    { source: 'ethereum', target: 'taiko', volume: 128300000, volumeFormatted: '$128.3M', change: '+22.5%' },
-    { source: 'taiko', target: 'ethereum', volume: 87600000, volumeFormatted: '$87.6M', change: '+14.8%' },
-    { source: 'arbitrum', target: 'optimism', volume: 76500000, volumeFormatted: '$76.5M', change: '+3.2%' },
-    { source: 'optimism', target: 'arbitrum', volume: 68400000, volumeFormatted: '$68.4M', change: '+2.7%' },
-    { source: 'ethereum', target: 'cartesi', volume: 45200000, volumeFormatted: '$45.2M', change: '+18.9%' },
-    { source: 'cartesi', target: 'ethereum', volume: 32100000, volumeFormatted: '$32.1M', change: '+11.3%' },
-    { source: 'ethereum', target: 'fhenix', volume: 29800000, volumeFormatted: '$29.8M', change: '+31.5%' },
-    { source: 'fhenix', target: 'ethereum', volume: 18700000, volumeFormatted: '$18.7M', change: '+26.8%' }
-  ];
-  
-  // Handle time filter change
-  const handleTimeFilterChange = (filter) => {
-    setTimeFilter(filter);
-  };
-  
-  // Toggle chain selection for filtering
-  const toggleChainSelection = (chainId) => {
-    if (selectedChains.includes(chainId)) {
-      setSelectedChains(selectedChains.filter(id => id !== chainId));
-    } else {
-      setSelectedChains([...selectedChains, chainId]);
+  const [fromChain, setFromChain] = useState(CHAINS.ETHEREUM)
+  const [toChain, setToChain] = useState(CHAINS.ARBITRUM)
+  const [timeFilter, setTimeFilter] = useState('24h')
+  const [showSettings, setShowSettings] = useState(false)
+  const [volumeData, setVolumeData] = useState(null)
+
+  useEffect(() => {
+    // Get volume data based on selected chains
+    const getVolumeData = () => {
+      const pairKey = `${fromChain.id}-${toChain.id}`
+      const reversePairKey = `${toChain.id}-${fromChain.id}`
+      
+      // Check if we have data for this pair or its reverse
+      const data = CHAIN_VOLUME_DATA[pairKey] || CHAIN_VOLUME_DATA[reversePairKey]
+      
+      if (data) {
+        // If using reverse pair, adjust the volume slightly to make it different
+        if (CHAIN_VOLUME_DATA[reversePairKey] && !CHAIN_VOLUME_DATA[pairKey]) {
+          return {
+            ...data,
+            volume: (parseFloat(data.volume) * 0.85).toFixed(1) + 'M',
+            change: data.change.startsWith('+') ? 
+              '-' + (parseFloat(data.change.slice(1)) * 0.7).toFixed(1) + '%' :
+              '+' + (parseFloat(data.change.slice(1)) * 0.7).toFixed(1) + '%',
+            routes: data.routes.map(route => ({
+              ...route,
+              volume: (parseFloat(route.volume) * 0.85).toFixed(1) + 'M',
+              change: route.change.startsWith('+') ?
+                '-' + (parseFloat(route.change.slice(1)) * 0.7).toFixed(1) + '%' :
+                '+' + (parseFloat(route.change.slice(1)) * 0.7).toFixed(1) + '%'
+            }))
+          }
+        }
+        return data
+      }
+
+      // If no data exists for this pair, generate some random data
+      return {
+        volume: (Math.random() * 500 + 100).toFixed(1) + 'M',
+        change: (Math.random() > 0.5 ? '+' : '-') + (Math.random() * 10).toFixed(1) + '%',
+        routes: [
+          {
+            protocol: 'Hop',
+            volume: (Math.random() * 200 + 50).toFixed(1) + 'M',
+            change: (Math.random() > 0.5 ? '+' : '-') + (Math.random() * 8).toFixed(1) + '%'
+          },
+          {
+            protocol: 'Across',
+            volume: (Math.random() * 150 + 30).toFixed(1) + 'M',
+            change: (Math.random() > 0.5 ? '+' : '-') + (Math.random() * 8).toFixed(1) + '%'
+          },
+          {
+            protocol: 'Stargate',
+            volume: (Math.random() * 100 + 20).toFixed(1) + 'M',
+            change: (Math.random() > 0.5 ? '+' : '-') + (Math.random() * 8).toFixed(1) + '%'
+          }
+        ]
+      }
     }
-  };
-  
-  // Filter cross-chain volume based on selected chains
-  const filteredCrossChainVolume = selectedChains.length === 0 
-    ? crossChainVolume 
-    : crossChainVolume.filter(item => 
-        selectedChains.includes(item.source) || selectedChains.includes(item.target)
-      );
-  
+
+    // Update volume data when chains or time filter changes
+    setVolumeData(getVolumeData())
+  }, [fromChain, toChain, timeFilter])
+
+  const handleSwitch = () => {
+    const temp = fromChain
+    setFromChain(toChain)
+    setToChain(temp)
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Cross-Chain Bridge Volume</h1>
-        
-        {/* Overview cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-500 mb-1">Total Bridge Volume</p>
-            <p className="text-2xl font-bold text-indigo-600">{volumeData.totalVolume}</p>
+    <div className="min-h-screen bg-[#0D0D0D] text-white p-8">
+      {/* Background glows */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#4B4BFF]/10 rounded-full blur-[120px]"></div>
+      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-[#2D2DFF]/15 rounded-full blur-[100px]"></div>
+
+      <div className="relative max-w-lg mx-auto">
+        <div className="bg-black/40 backdrop-blur-xl rounded-2xl p-8 border border-[#4B4BFF]/20">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-white">Volume Analytics</h2>
+            <button 
+              onClick={() => setShowSettings(!showSettings)}
+              className="p-2 hover:bg-white/5 rounded-lg transition-colors"
+            >
+              <Settings className="w-5 h-5 text-gray-400" />
+            </button>
           </div>
-          
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-500 mb-1">Daily Volume (24h)</p>
-            <p className="text-2xl font-bold text-indigo-600">{volumeData.dailyVolume}</p>
-            <p className="text-sm text-green-500 mt-1">{volumeData.weeklyGrowth} this week</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-500 mb-1">Most Active Bridge</p>
-            <p className="text-2xl font-bold text-indigo-600">{volumeData.topBridge}</p>
-            <p className="text-sm text-gray-500 mt-1">{volumeData.topBridgeVolume} (24h)</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-500 mb-1">Active Bridges</p>
-            <p className="text-2xl font-bold text-indigo-600">27</p>
-            <p className="text-sm text-gray-500 mt-1">Across {chains.length} chains</p>
-          </div>
-        </div>
-        
-        {/* Filters */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4 md:mb-0">Volume Analytics</h2>
-            
-            <div className="flex space-x-2">
-              <button 
-                onClick={() => handleTimeFilterChange('24h')}
-                className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                  timeFilter === '24h' 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                24H
-              </button>
-              <button 
-                onClick={() => handleTimeFilterChange('7d')}
-                className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                  timeFilter === '7d' 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                7D
-              </button>
-              <button 
-                onClick={() => handleTimeFilterChange('30d')}
-                className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                  timeFilter === '30d' 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                30D
-              </button>
-              <button 
-                onClick={() => handleTimeFilterChange('90d')}
-                className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                  timeFilter === '90d' 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                90D
-              </button>
-              <button 
-                onClick={() => handleTimeFilterChange('all')}
-                className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                  timeFilter === 'all' 
-                    ? 'bg-indigo-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                All
-              </button>
-            </div>
-          </div>
-          
-          {/* Volume chart placeholder - would be replaced with a real chart library */}
-          <div className="bg-gray-100 rounded-lg p-4 h-64 mb-6 flex items-center justify-center">
-            <div className="text-center">
-              <div className="text-gray-400 mb-2">Bridge Volume Chart</div>
-              <div className="text-sm text-gray-500">
-                This would be a line or bar chart showing bridge volume over time.
-                <br />
-                (Implement with Chart.js, Recharts, or similar library)
+
+          {/* Settings Panel */}
+          {showSettings && (
+            <div className="mb-6 p-4 bg-white/5 rounded-xl border border-[#4B4BFF]/20">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-400">Time Period</span>
+                  <Info className="w-4 h-4 text-gray-500" />
+                </div>
+                <div className="flex gap-2">
+                  {['24h', '7d', '30d', 'All'].map((period) => (
+                    <button
+                      key={period}
+                      onClick={() => setTimeFilter(period)}
+                      className={`px-3 py-1 rounded-lg text-sm ${
+                        timeFilter === period
+                          ? 'bg-gradient-to-r from-[#4B4BFF] to-[#2D2DFF] text-white'
+                          : 'bg-white/5 text-gray-400'
+                      }`}
+                    >
+                      {period}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-          
-          {/* Chain filter */}
-          <h3 className="text-lg font-medium text-gray-800 mb-3">Filter by Chain</h3>
-          <div className="flex flex-wrap gap-2 mb-4">
-            {chains.map(chain => (
-              <button
-                key={chain.id}
-                onClick={() => toggleChainSelection(chain.id)}
-                className={`flex items-center px-3 py-2 rounded-md text-sm transition-colors ${
-                  selectedChains.includes(chain.id)
-                    ? 'bg-indigo-100 text-indigo-700 border border-indigo-300'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-transparent'
-                }`}
+          )}
+
+          {/* Chain Selection */}
+          <div className="space-y-6">
+            {/* From Chain */}
+            <div className="bg-white/5 p-4 rounded-xl border border-[#4B4BFF]/20">
+              <div className="flex justify-between mb-2">
+                <span className="text-gray-400">From Chain</span>
+              </div>
+              <select
+                value={fromChain.id}
+                onChange={(e) => setFromChain(Object.values(CHAINS).find(c => c.id === e.target.value))}
+                className="w-full p-3 bg-white/5 text-white rounded-xl border border-[#4B4BFF]/20 outline-none"
               >
-                <img 
-                  src={chain.icon} 
-                  alt={chain.name} 
-                  className="w-4 h-4 mr-2"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = '/assets/chain-logos/default.svg';
-                  }} 
-                />
-                {chain.name}
-              </button>
-            ))}
-            
-            {selectedChains.length > 0 && (
+                {Object.values(CHAINS).map((chain) => (
+                  <option key={chain.id} value={chain.id} className="bg-[#1a1b1e]">
+                    {chain.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Switch Button */}
+            <div className="flex justify-center -my-3 relative z-10">
               <button
-                onClick={() => setSelectedChains([])}
-                className="flex items-center px-3 py-2 rounded-md text-sm bg-gray-100 text-gray-600 hover:bg-gray-200"
+                onClick={handleSwitch}
+                className="bg-gradient-to-r from-[#4B4BFF] to-[#2D2DFF] p-2 rounded-xl hover:shadow-[0_0_20px_rgba(75,75,255,0.3)] transition-all duration-300"
               >
-                Clear All
+                <ArrowDownUp className="w-5 h-5 text-white" />
               </button>
-            )}
-          </div>
-        </div>
-        
-        {/* Cross-chain volume table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden mb-8">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-800">Cross-Chain Bridge Volume</h2>
-            <p className="text-gray-500 text-sm mt-1">
-              {timeFilter === '24h' ? 'Last 24 hours' : 
-               timeFilter === '7d' ? 'Last 7 days' : 
-               timeFilter === '30d' ? 'Last 30 days' : 
-               timeFilter === '90d' ? 'Last 90 days' : 'All time'}
-            </p>
-          </div>
-          
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Source Chain
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Target Chain
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Volume
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Change
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredCrossChainVolume.map((item, index) => {
-                  const sourceChain = chains.find(chain => chain.id === item.source);
-                  const targetChain = chains.find(chain => chain.id === item.target);
-                  
-                  return (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <img 
-                            src={sourceChain?.icon} 
-                            alt={sourceChain?.name} 
-                            className="w-6 h-6 mr-3"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = '/assets/chain-logos/default.svg';
-                            }} 
-                          />
-                          <div className="text-sm font-medium text-gray-900">
-                            {sourceChain?.name || item.source}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <img 
-                            src={targetChain?.icon} 
-                            alt={targetChain?.name} 
-                            className="w-6 h-6 mr-3"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = '/assets/chain-logos/default.svg';
-                            }} 
-                          />
-                          <div className="text-sm font-medium text-gray-900">
-                            {targetChain?.name || item.target}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-semibold text-gray-900">{item.volumeFormatted}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex text-xs font-semibold px-2 py-1 rounded-full ${
-                          item.change.startsWith('+') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+            </div>
+
+            {/* To Chain */}
+            <div className="bg-white/5 p-4 rounded-xl border border-[#4B4BFF]/20">
+              <div className="flex justify-between mb-2">
+                <span className="text-gray-400">To Chain</span>
+              </div>
+              <select
+                value={toChain.id}
+                onChange={(e) => setToChain(Object.values(CHAINS).find(c => c.id === e.target.value))}
+                className="w-full p-3 bg-white/5 text-white rounded-xl border border-[#4B4BFF]/20 outline-none"
+              >
+                {Object.values(CHAINS).map((chain) => (
+                  <option key={chain.id} value={chain.id} className="bg-[#1a1b1e]">
+                    {chain.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Volume Display */}
+            {volumeData && (
+              <div className="mt-6 p-6 bg-white/5 rounded-xl border border-[#4B4BFF]/20">
+                <div className="flex justify-between items-center mb-4">
+                  <div className="flex items-center gap-2">
+                    <ChainLogo chain={fromChain} />
+                    <span className="text-gray-400">→</span>
+                    <ChainLogo chain={toChain} />
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold">${volumeData.volume}</div>
+                    <div className={`text-sm ${
+                      volumeData.change.startsWith('+') ? 'text-green-400' : 'text-red-400'
+                    }`}>
+                      {volumeData.change}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Routes Breakdown */}
+                <div className="mt-4 space-y-3">
+                  <h3 className="text-gray-400 text-sm">Routes Breakdown</h3>
+                  {volumeData.routes.map((route, index) => (
+                    <div key={index} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                      <span>{route.protocol}</span>
+                      <div className="text-right">
+                        <div>${route.volume}</div>
+                        <div className={`text-sm ${
+                          route.change.startsWith('+') ? 'text-green-400' : 'text-red-400'
                         }`}>
-                          {item.change}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-        {/* Heatmap visualization (placeholder) */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Bridge Volume Heatmap</h2>
-          
-          <div className="bg-gray-100 rounded-lg p-4 h-80 flex items-center justify-center">
-            <div className="text-center">
-              <div className="text-gray-400 mb-2">Cross-Chain Heatmap</div>
-              <div className="text-sm text-gray-500">
-                This would be a heatmap visualization showing volume intensity between chains.
-                <br />
-                (Implement with D3.js, react-vis, or similar library)
+                          {route.change}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
