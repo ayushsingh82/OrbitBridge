@@ -46,10 +46,10 @@ function Home() {
               Our comprehensive dashboard provides real-time insights into cross-chain activity, helping you make informed decisions about bridge usage, gas efficiency, and emerging trends in the multi-chain landscape.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link to="/dashboard" className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-md hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+              <Link to="/" className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-md hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
                 Explore Analytics
               </Link>
-              <Link to="/chains" className="px-8 py-3 border border-purple-600 text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors duration-300 shadow-sm hover:shadow transform hover:-translate-y-1">
+              <Link to="/" className="px-8 py-3 border border-purple-600 text-purple-600 font-medium rounded-md hover:bg-purple-50 transition-colors duration-300 shadow-sm hover:shadow transform hover:-translate-y-1">
                 View Chains
               </Link>
             </div>
