@@ -9,10 +9,10 @@ function Navbar() {
           <span className="mr-2">🔄</span>OrbitBridge
         </Link>
         <div className="space-x-4">
-          <Link to="/volume" className="hover:text-indigo-200 transition-colors duration-200">Volumne</Link>
+          <Link to="/volume" className="hover:text-indigo-200 transition-colors duration-200">Volume</Link>
           <Link to="/routes" className="hover:text-indigo-200 transition-colors duration-200">Routes</Link>
        
-          <Link to="/" className="hover:text-indigo-200 transition-colors duration-200">Leaderboard</Link>
+          <Link to="/rollups" className="hover:text-indigo-200 transition-colors duration-200">Leaderboard</Link>
         </div>
       </div>
     </nav>

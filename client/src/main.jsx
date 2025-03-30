@@ -6,6 +6,7 @@ import './index.css'
 import Home from './Components/Home.jsx'
 import Volume from './Components/Volume.jsx'
 import RoutesPage from './Components/Routes.jsx'
+import Rollups from './Components/Rollups.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route index element={<Home />} />
           <Route path="/volume" element={<Volume />} />
           <Route path="/routes" element={<RoutesPage />} />
+          <Route path="/rollups" element={<Rollups />} />
         </Route>
       </RouterRoutes>
     </BrowserRouter>
